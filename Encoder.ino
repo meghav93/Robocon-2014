@@ -1,26 +1,12 @@
 #include "Declarations.h"
 
-bool encoder::initialized = false;
-encoder *encoder::encList[maxEncoders];
-int encoder::numEnc;
-
-
-inline encoder::encoder(PinNum p1,PinNum p2) : Encoder(p1,p2 > 0 ? p2 : p1 + 1) 
+Encoder::Encoder(PinNum P):Pin(P)
 {
-	if (!initialized) initClass();
-	encList[numEnc] = this;
-	numEnc++;
+    pinMode(Pin,INPUT);
+    //attachInterrupt(Pin,interrupt,RISING);
+    count=0;
 }
-
-inline void encoder::initClass() {
-	numEnc = 0;
-	for (int i = 0; i< maxEncoders; i++)
-		encList[i] = 0;
-	initialized = true;
+void Encoder::interrupt()
+{
+  count++;
 }
-
-inline void encoder::updateAll() {
-	for (int i = 0; i<maxEncoders; i++)
-		if (encList[i]) encList[i]->read();
-}
-

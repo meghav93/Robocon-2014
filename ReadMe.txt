@@ -1,1 +1,1 @@
-Open Robocon.ino to open all tabs at once.
+Open child.ino to open all tabs at once.
